@@ -50,9 +50,7 @@ It comes with a clean UI built using **HTML, CSS, JavaScript** and a powerful ba
 │── backend/
 │ ├── main.py
 │ ├── database.py
-│ ├── models.py
-│ └── schemas.py
-│
+│ └── models.py
 │── frontend/
 │ ├── index.html
 └── README.md
