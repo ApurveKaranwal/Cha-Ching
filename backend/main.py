@@ -17,7 +17,6 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
-# ----------------- DB Dependency -----------------
 def get_db():
     db = SessionLocal()
     try:
@@ -25,7 +24,6 @@ def get_db():
     finally:
         db.close()
 
-# ----------------- Pydantic Schema -----------------
 class MoneyInput(BaseModel):
     category: str
     amount: int
@@ -36,7 +34,6 @@ class FriendExpenseInput(BaseModel):
     amount: int
     note: str | None = None 
 
-# ----------------- ADD ENTRY -----------------
 @app.post("/add", tags=["Add your Expense"])
 def add_expense(payload: MoneyInput, db: Session = Depends(get_db)):
     try:
@@ -60,13 +57,11 @@ def add_expense(payload: MoneyInput, db: Session = Depends(get_db)):
     except Exception as e:
         raise HTTPException(status_code=500, detail=str(e))
 
-# ----------------- TOTAL SPENDING -----------------
 @app.get("/total", tags=["Total Expense"])
 def get_total_spending(db: Session = Depends(get_db)):
     total = db.query(func.sum(MoneyEntry.amount)).scalar()
     return {"total_spending": total or 0}
 
-# ----------------- GET ALL ENTRIES (with optional category filter) -----------------
 @app.get("/entries", tags=["Retrieve All Entries"])
 def get_all_entries(
     category: str | None = None,
@@ -89,7 +84,6 @@ def get_all_entries(
         for e in entries
     ]
 
-# ----------------- GET SINGLE ENTRY -----------------
 @app.get("/entry/{id}", tags=["Retrieve Single Entry"])
 def get_entry(id: int, db: Session = Depends(get_db)):
     entry = db.query(MoneyEntry).filter(MoneyEntry.id == id).first()
@@ -104,7 +98,6 @@ def get_entry(id: int, db: Session = Depends(get_db)):
         "note": entry.note
     }
 
-# ----------------- DELETE ENTRY -----------------
 @app.delete("/entry/{id}", tags=["Delete Entry"])
 def delete_entry(id: int, db: Session = Depends(get_db)):
     entry = db.query(MoneyEntry).filter(MoneyEntry.id == id).first()
@@ -119,7 +112,6 @@ def delete_entry(id: int, db: Session = Depends(get_db)):
 @app.post("/give", tags=["Friend Expenses"])
 def give_cash(payload: FriendExpenseInput, db: Session = Depends(get_db)):
     try:
-        # Store as a MoneyEntry with category = "Friend"
         note_text = f"Gave ₹{payload.amount} to {payload.friend_name}"
         if payload.note:
             note_text += f" ({payload.note})"

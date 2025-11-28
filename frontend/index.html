@@ -3,281 +3,282 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Expense Tracker</title>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+  <title>Cha Ching.</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Space+Grotesk:wght@500;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 
   <style>
     :root {
-      /* Dark Theme Palette */
-      --primary: #6366f1; /* Indigo Accent */
-      --primary-hover: #4f46e5;
-      --secondary: #ec4899; /* Pink for Friend Mode */
-      --danger: #ef4444;
+      /* The "Cha Ching" Palette */
+      --bg: #fafafa;         /* Off-white background */
+      --surface: #ffffff;    /* Pure white cards */
       
-      --bg-color: #0f172a;   
-      --card-bg: #1e293b;    
-      --input-bg: #334155;
+      --text-primary: #111111;
+      --text-secondary: #888888;
       
-      --text-main: #f8fafc;  
-      --text-muted: #94a3b8; 
-      --border-color: #334155;
+      --accent: #16a34a;     /* Money Green */
+      --black: #000000;
+      --border: #e5e5e5;
       
-      --shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.5);
+      --radius: 16px;
     }
 
     * { box-sizing: border-box; }
 
     body {
       font-family: 'Inter', sans-serif;
-      background-color: var(--bg-color);
-      color: var(--text-main);
+      background-color: var(--bg);
+      color: var(--text-primary);
       margin: 0;
-      padding: 0;
+      padding: 40px 20px;
       display: flex;
       justify-content: center;
       min-height: 100vh;
     }
 
-    /* --- LAYOUT --- */
-    .main-wrapper {
+    .app-container {
       width: 100%;
-      max-width: 1200px;
-      padding: 40px 20px;
-      display: grid;
-      grid-template-columns: 350px 1fr;
-      gap: 30px;
+      max-width: 550px; /* Narrow, focused layout */
     }
 
-    /* --- SIDEBAR (FORM) --- */
-    .sidebar { display: flex; flex-direction: column; gap: 20px; }
-
-    .card {
-      background: var(--card-bg);
-      padding: 25px;
-      border-radius: 16px;
-      box-shadow: var(--shadow);
-      border: 1px solid var(--border-color);
+    /* --- BRANDING --- */
+    .header {
+      text-align: center;
+      margin-bottom: 40px;
     }
 
-    h1 { font-size: 24px; font-weight: 700; margin: 0 0 5px 0; color: var(--primary); }
-    h2 { font-size: 18px; font-weight: 600; margin-bottom: 15px; color: var(--text-main); }
-    p.subtitle { color: var(--text-muted); font-size: 14px; margin: 0 0 20px 0; }
+    .logo {
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 32px;
+      font-weight: 700;
+      letter-spacing: -1px;
+      margin: 0;
+      display: inline-block;
+    }
+
+    .dot { color: var(--accent); }
+
+    /* --- BALANCE CARD --- */
+    .balance-card {
+      background: var(--surface);
+      padding: 30px;
+      border-radius: 24px; /* Super rounded */
+      text-align: center;
+      margin-bottom: 30px;
+      box-shadow: 0 20px 40px -10px rgba(0,0,0,0.05); /* Soft float shadow */
+    }
+
+    .balance-label {
+      color: var(--text-secondary);
+      font-size: 13px;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      font-weight: 600;
+      margin-bottom: 8px;
+    }
+
+    .balance-amount {
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 48px;
+      font-weight: 700;
+      color: var(--black);
+      letter-spacing: -1.5px;
+    }
 
     /* --- TABS --- */
-    .tab-container {
+    .tabs {
       display: flex;
-      background: var(--input-bg);
+      justify-content: center;
+      gap: 10px;
+      margin-bottom: 25px;
+      background: #f1f1f1;
       padding: 5px;
-      border-radius: 8px;
-      margin-bottom: 20px;
+      border-radius: 50px; /* Pill shape */
+      width: fit-content;
+      margin-left: auto;
+      margin-right: auto;
     }
 
     .tab-btn {
-      flex: 1;
-      padding: 10px;
+      padding: 10px 24px;
       border: none;
       background: transparent;
-      color: var(--text-muted);
+      font-size: 13px;
       font-weight: 600;
-      border-radius: 6px;
+      color: var(--text-secondary);
       cursor: pointer;
-      transition: all 0.3s;
+      border-radius: 40px;
+      transition: all 0.2s ease;
     }
 
     .tab-btn.active {
-      background: var(--card-bg); /* Pop out effect */
-      color: var(--text-main);
-      box-shadow: 0 2px 4px rgba(0,0,0,0.2);
+      background: var(--surface);
+      color: var(--black);
+      box-shadow: 0 4px 10px rgba(0,0,0,0.05);
     }
     
-    .tab-btn.friend-active {
-        color: var(--secondary);
+    /* Specific Friend Active Color */
+    .tab-btn.friend-active { color: #ec4899; }
+
+    /* --- FORM --- */
+    .input-group {
+      background: var(--surface);
+      border-radius: var(--radius);
+      padding: 10px;
+      margin-bottom: 20px;
+      border: 1px solid var(--border);
     }
 
-    /* --- INPUTS --- */
-    .form-group { margin-bottom: 15px; }
-    
-    label {
-      display: block;
-      font-size: 12px;
-      font-weight: 600;
-      color: var(--text-muted);
-      margin-bottom: 8px;
-      text-transform: uppercase;
-      letter-spacing: 0.5px;
+    .input-row {
+      display: flex;
+      border-bottom: 1px solid var(--border);
     }
+    .input-row:last-child { border-bottom: none; }
 
-    input, select {
+    input {
       width: 100%;
-      padding: 12px 15px;
-      border: 1px solid var(--border-color);
-      border-radius: 8px;
-      font-size: 14px;
-      transition: all 0.3s ease;
-      background: var(--input-bg);
-      color: white;
-    }
-
-    input::placeholder { color: #64748b; }
-    input:focus { outline: none; border-color: var(--primary); box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.2); }
-
-    /* Hide helper class */
-    .hidden { display: none; }
-
-    /* --- BUTTONS --- */
-    button {
-      width: 100%;
-      padding: 12px;
+      padding: 16px;
       border: none;
-      border-radius: 8px;
+      font-size: 15px;
+      font-family: 'Inter', sans-serif;
+      outline: none;
+      color: var(--text-primary);
+      background: transparent;
+    }
+    
+    input::placeholder { color: #d4d4d4; }
+
+    /* The 'Cha Ching' Button */
+    .action-btn {
+      width: 100%;
+      background: var(--black);
+      color: white;
+      border: none;
+      padding: 18px;
+      border-radius: var(--radius);
+      font-size: 16px;
       font-weight: 600;
       cursor: pointer;
-      transition: transform 0.2s, background 0.2s;
+      transition: transform 0.1s;
+      margin-bottom: 40px;
+      font-family: 'Space Grotesk', sans-serif;
     }
 
-    .btn-primary { background: var(--primary); color: white; }
-    .btn-primary:hover { background: var(--primary-hover); transform: translateY(-2px); }
+    .action-btn:active { transform: scale(0.98); }
+    .action-btn:hover { background: #222; }
 
-    .btn-secondary { background: var(--secondary); color: white; }
-    .btn-secondary:hover { opacity: 0.9; transform: translateY(-2px); }
+    .btn-pink { background: #ec4899; }
+    .btn-pink:hover { background: #db2777; }
 
-    .btn-outline { background: transparent; border: 1px solid var(--border-color); color: var(--text-muted); }
-    .btn-outline:hover { background: var(--input-bg); color: white; }
+    /* --- LIST --- */
+    .list-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 15px;
+    }
+    .list-title { font-size: 18px; font-weight: 700; font-family: 'Space Grotesk'; }
+    
+    .transaction-list {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+    }
 
-    /* --- DASHBOARD & TABLE --- */
-    .dashboard { display: flex; flex-direction: column; gap: 20px; }
-
-    .total-card {
-      background: linear-gradient(135deg, #4f46e5 0%, #a855f7 100%);
-      color: white;
-      padding: 30px;
-      border-radius: 16px;
-      box-shadow: 0 10px 25px rgba(79, 70, 229, 0.2);
+    .transaction-item {
       display: flex;
       justify-content: space-between;
       align-items: center;
+      padding: 20px 0;
+      border-bottom: 1px solid var(--border);
     }
+    .transaction-item:last-child { border-bottom: none; }
 
-    .total-info h3 { margin: 0; font-weight: 400; opacity: 0.9; font-size: 16px; }
-    .total-amount { font-size: 36px; font-weight: 700; margin: 5px 0 0 0; }
-    .total-icon { font-size: 40px; opacity: 0.3; }
+    .t-left { display: flex; flex-direction: column; gap: 4px; }
+    .t-category { font-weight: 600; font-size: 15px; }
+    .t-note { font-size: 12px; color: var(--text-secondary); }
 
-    /* FILTERS & TABLE */
-    .filter-container { display: flex; gap: 10px; align-items: center; }
-    .filter-container input { flex: 1; }
-    .filter-container button { width: auto; padding: 10px 20px; }
-
-    .table-container { overflow-x: auto; }
-    table { width: 100%; border-collapse: separate; border-spacing: 0 10px; }
-    th { text-align: left; color: var(--text-muted); font-size: 12px; text-transform: uppercase; padding: 0 20px; }
+    .t-right { text-align: right; }
+    .t-amount { font-weight: 700; font-size: 15px; font-family: 'Space Grotesk'; }
     
-    tbody tr { background: var(--input-bg); transition: transform 0.2s; }
-    tbody tr:hover { transform: scale(1.01); background: #475569; }
-    
-    td { padding: 20px; border-top: 1px solid var(--bg-color); border-bottom: 1px solid var(--bg-color); color: var(--text-main); }
-    td:first-child { border-top-left-radius: 10px; border-bottom-left-radius: 10px; border-left: 1px solid var(--bg-color); font-weight: bold; color: var(--primary); }
-    td:last-child { border-top-right-radius: 10px; border-bottom-right-radius: 10px; border-right: 1px solid var(--bg-color); text-align: right; }
-
-    .category-tag { background: rgba(99, 102, 241, 0.2); color: #a5b4fc; padding: 5px 12px; border-radius: 20px; font-size: 12px; font-weight: 600; border: 1px solid rgba(99, 102, 241, 0.3); }
-    /* Special style for Friend tag */
-    .tag-friend { background: rgba(236, 72, 153, 0.2); color: #f472b6; border-color: rgba(236, 72, 153, 0.3); }
-
-    .amount-text { font-weight: bold; color: #34d399; }
-    .delete-btn { background: rgba(239, 68, 68, 0.2); color: var(--danger); width: 35px; height: 35px; padding: 0; display: inline-flex; align-items: center; justify-content: center; border-radius: 50%; }
-    .delete-btn:hover { background: var(--danger); color: white; }
-
-    @media (max-width: 900px) {
-      .main-wrapper { grid-template-columns: 1fr; }
-      .total-card { flex-direction: column; align-items: flex-start; gap: 15px; }
-      .total-icon { display: none; }
+    .delete-trigger {
+        background: none; border: none; 
+        color: #ef4444; font-size: 12px; 
+        cursor: pointer; opacity: 0; 
+        transition: opacity 0.2s;
+        margin-left: 10px;
     }
+    .transaction-item:hover .delete-trigger { opacity: 1; }
+
+    .hidden { display: none; }
+    
+    /* Filters */
+    .filter-bar { display: flex; gap: 10px; margin-bottom: 10px; }
+    .filter-input { background: var(--surface); padding: 8px 15px; border-radius: 50px; border: 1px solid var(--border); font-size: 13px; }
+
   </style>
 </head>
 <body>
 
-  <div class="main-wrapper">
+  <div class="app-container">
     
-    <aside class="sidebar">
-      <div class="card">
-        <h1>Expense Tracker</h1>
-        <p class="subtitle">Manage finances & friends</p>
-        
-        <div class="tab-container">
-          <button class="tab-btn active" id="tab-expense" onclick="switchMode('expense')">Expense</button>
-          <button class="tab-btn" id="tab-friend" onclick="switchMode('friend')">Lend Friend</button>
-        </div>
-        
-        <div class="form-group" id="input-category-group">
-          <label>Category</label>
-          <input type="text" id="category" placeholder="e.g. Food, Travel">
-        </div>
+    <header class="header">
+      <h1 class="logo">Cha Ching<span class="dot">.</span></h1>
+    </header>
 
-        <div class="form-group hidden" id="input-friend-group">
-          <label style="color: var(--secondary)">Friend Name</label>
-          <input type="text" id="friendName" placeholder="Who did you give money?">
-        </div>
-        
-        <div class="form-group">
-          <label>Amount (₹)</label>
-          <input type="number" id="amount" placeholder="0.00">
-        </div>
-        
-        <div class="form-group">
-          <label>Note</label>
-          <input type="text" id="note" placeholder="Description (optional)">
-        </div>
+    <div class="balance-card">
+      <div class="balance-label">Total Balance</div>
+      <div class="balance-amount" id="total">₹0.00</div>
+    </div>
 
-        <button class="btn-primary" id="submit-btn" onclick="submitForm()">Add Transaction</button>
+    <div class="tabs">
+      <button class="tab-btn active" id="tab-expense" onclick="switchMode('expense')">Expense</button>
+      <button class="tab-btn" id="tab-friend" onclick="switchMode('friend')">Friend</button>
+    </div>
+
+    <div class="input-group">
+      <div class="input-row" id="input-category-group">
+        <input type="text" id="category" placeholder="What did you buy? (Category)">
       </div>
-    </aside>
-
-    <main class="dashboard">
       
-      <div class="total-card">
-        <div class="total-info">
-          <h3>Total Balance / Spending</h3>
-          <div class="total-amount" id="total">₹0.00</div>
-        </div>
-        <i class="fa-solid fa-wallet total-icon"></i>
+      <div class="input-row hidden" id="input-friend-group">
+        <input type="text" id="friendName" placeholder="Who are you lending to?">
       </div>
 
-      <div class="card">
-        <div class="filter-container">
-          <input type="text" id="filterCategory" placeholder="Search by Category...">
-          <button class="btn-outline" onclick="getExpenses()"><i class="fa-solid fa-filter"></i> Filter</button>
-          <button class="btn-outline" onclick="getExpenses(true)"><i class="fa-solid fa-rotate-right"></i></button>
-        </div>
-
-        <div class="table-container">
-          <table id="expensesTable">
-            <thead>
-              <tr>
-                <th>ID</th>
-                <th>Category</th>
-                <th>Note</th>
-                <th>Amount</th>
-                <th>Action</th>
-              </tr>
-            </thead>
-            <tbody></tbody>
-          </table>
-        </div>
+      <div class="input-row">
+        <input type="number" id="amount" placeholder="₹0.00">
       </div>
 
-    </main>
+      <div class="input-row">
+        <input type="text" id="note" placeholder="Add a note...">
+      </div>
+    </div>
+
+    <button class="action-btn" id="submit-btn" onclick="submitForm()">Cha Ching.</button>
+
+
+    <div class="list-header">
+        <span class="list-title">Recent</span>
+        <div class="filter-bar">
+             <input type="text" class="filter-input" id="filterCategory" placeholder="Search..." onkeyup="if(event.key === 'Enter') getExpenses()">
+             <i class="fa-solid fa-rotate-right" style="cursor:pointer; color:#888; margin-top: 8px;" onclick="getExpenses(true)"></i>
+        </div>
+    </div>
+
+    <ul class="transaction-list" id="expensesList">
+       </ul>
+
   </div>
 
   <script>
     const API_URL = "http://127.0.0.1:8000";
-    let currentMode = 'expense'; // 'expense' or 'friend'
+    let currentMode = 'expense'; 
 
-    // Currency Formatter
     const formatCurrency = (num) => {
       return new Intl.NumberFormat('en-IN', { style: 'currency', currency: 'INR', minimumFractionDigits: 0 }).format(num);
     }
 
-    // --- TAB SWITCHING LOGIC ---
+    // --- TAB LOGIC ---
     function switchMode(mode) {
       currentMode = mode;
       
@@ -293,56 +294,49 @@
         catGroup.classList.remove('hidden');
         friendGroup.classList.add('hidden');
         
-        btn.innerText = "Add Transaction";
-        btn.className = "btn-primary";
+        btn.innerText = "Cha Ching.";
+        btn.className = "action-btn";
       } else {
         friendTab.classList.add('active', 'friend-active');
         expenseTab.classList.remove('active');
         catGroup.classList.add('hidden');
         friendGroup.classList.remove('hidden');
         
-        btn.innerText = "Record Loan";
-        btn.className = "btn-secondary"; // Make button pink
+        btn.innerText = "Lend Money";
+        btn.className = "action-btn btn-pink"; 
       }
     }
 
     // --- API CALLS ---
-
     async function submitForm() {
       const amount = document.getElementById("amount").value;
       const note = document.getElementById("note").value;
 
-      if (!amount) { alert("Please enter amount"); return; }
+      if (!amount) return; // Silent fail on empty
 
       if (currentMode === 'expense') {
-        // --- EXPENSE LOGIC ---
         const category = document.getElementById("category").value;
-        if (!category) { alert("Please enter category"); return; }
+        if (!category) return;
 
         try {
           await fetch(`${API_URL}/add`, {
-            method: "POST",
-            headers: { "Content-Type": "application/json" },
+            method: "POST", headers: { "Content-Type": "application/json" },
             body: JSON.stringify({ category, amount: Number(amount), note })
           });
-          clearInputs();
-          getExpenses();
-        } catch (err) { alert("Error adding expense"); }
+          clearInputs(); getExpenses();
+        } catch (err) { console.error(err); }
 
       } else {
-        // --- FRIEND LOGIC (/give) ---
         const friendName = document.getElementById("friendName").value;
-        if (!friendName) { alert("Please enter friend's name"); return; }
+        if (!friendName) return;
 
         try {
           await fetch(`${API_URL}/give`, {
-            method: "POST",
-            headers: { "Content-Type": "application/json" },
+            method: "POST", headers: { "Content-Type": "application/json" },
             body: JSON.stringify({ friend_name: friendName, amount: Number(amount), note })
           });
-          clearInputs();
-          getExpenses();
-        } catch (err) { alert("Error recording friend transaction"); }
+          clearInputs(); getExpenses();
+        } catch (err) { console.error(err); }
       }
     }
 
@@ -362,32 +356,35 @@
       try {
         const res = await fetch(url);
         const data = await res.json();
-        const tbody = document.querySelector("#expensesTable tbody");
-        tbody.innerHTML = "";
+        const list = document.getElementById("expensesList");
+        list.innerHTML = "";
 
         if(data.length === 0) {
-            tbody.innerHTML = `<tr><td colspan="5" style="text-align:center; color:#555; padding: 30px;">No records found</td></tr>`;
+            list.innerHTML = `<li style="text-align:center; padding: 40px; color: #ddd; font-size: 14px;">No transactions yet.</li>`;
         }
 
         data.forEach(e => {
-          // Check if it's a Friend category to style differently
-          let tagClass = "category-tag";
-          if (e.category === "Friend") tagClass += " tag-friend";
+          const isFriend = e.category === "Friend";
+          const displayCat = isFriend ? `Lent to: ${e.note.split(' ')[0] || 'Friend'}` : e.category;
+          const displayNote = isFriend ? 'Loan' : (e.note || '');
+          const colorClass = isFriend ? 'color: #ec4899;' : 'color: #111;';
 
-          const row = document.createElement("tr");
-          row.innerHTML = `
-            <td>#${e.id}</td>
-            <td><span class="${tagClass}">${e.category}</span></td>
-            <td style="color: #94a3b8;">${e.note}</td>
-            <td class="amount-text">${formatCurrency(e.amount)}</td>
-            <td>
-              <button class="delete-btn" onclick="deleteExpense(${e.id})"><i class="fa-solid fa-trash"></i></button>
-            </td>
+          const item = document.createElement("li");
+          item.className = "transaction-item";
+          item.innerHTML = `
+            <div class="t-left">
+                <span class="t-category" style="${colorClass}">${e.category}</span>
+                <span class="t-note">${e.note || ''}</span>
+            </div>
+            <div class="t-right">
+                <div class="t-amount">${formatCurrency(e.amount)}</div>
+                <button class="delete-trigger" onclick="deleteExpense(${e.id})">Delete</button>
+            </div>
           `;
-          tbody.appendChild(row);
+          list.appendChild(item);
         });
         getTotal(); 
-      } catch (err) { console.error("Error fetching expenses:", err); }
+      } catch (err) { console.error("Error:", err); }
     }
 
     async function getTotal() {
@@ -395,16 +392,15 @@
         const res = await fetch(`${API_URL}/total`);
         const data = await res.json();
         document.getElementById("total").innerText = formatCurrency(data.total_spending);
-      } catch (err) { console.error("Error fetching total:", err); }
+      } catch (err) { console.error("Error:", err); }
     }
 
     async function deleteExpense(id) {
-      if (!confirm("Are you sure you want to delete this entry?")) return;
+      if (!confirm("Remove this entry?")) return;
       try { await fetch(`${API_URL}/entry/${id}`, { method: "DELETE" }); getExpenses(); } 
-      catch (err) { alert("Error deleting entry"); }
+      catch (err) { console.error(err); }
     }
 
-    // Initial load
     getExpenses();
   </script>
 </body>
